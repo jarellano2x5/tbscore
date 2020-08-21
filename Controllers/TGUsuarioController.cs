@@ -37,13 +37,13 @@ namespace wcore3.Controllers
         }
 
         [HttpGet("[action]/{usu}/{pwd}")]
-        public ActionResult<LoginDto> Login(string usu, string pwd)
+        public async Task<ActionResult<LoginDto>> Login(string usu, string pwd)
         {
-            return _ser.Login(usu, pwd);
+            return await _ser.Login(usu, pwd);
         }
 
         [HttpGet("[action]")]
-        public ActionResult<int> Configure()
+        public async Task<ActionResult<int>> Configure()
         {
             TGUsuarioDto u = new TGUsuarioDto
             {
@@ -54,7 +54,8 @@ namespace wcore3.Controllers
                 Contrasena = "juan",
                 Correo = "algo.com"
             };
-            int vl = _ser.Create(u).TGUsuarioID;
+            LoginDto res = await _ser.Create(u);
+            int vl = res.TGUsuarioID;
             return vl;
         }
 
@@ -67,9 +68,9 @@ namespace wcore3.Controllers
 
         // POST api/values
         [HttpPost]
-        public ActionResult<LoginDto> Post([FromBody] TGUsuarioDto value)
+        public async Task<ActionResult<LoginDto>> Post([FromBody] TGUsuarioDto value)
         {
-            return _ser.Create(value);
+            return await _ser.Create(value);
         }
 
         // PUT api/values/5

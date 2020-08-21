@@ -1,6 +1,8 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using tbscore.Models;
 using tbscore.Interfaces;
 using tbscore.Data;
@@ -15,33 +17,43 @@ namespace tbscore.Repositories
             _ctx = context;
         }
 
-        public int Create(BTDato entity)
+        public async Task<int> Create(BTDato entity)
         {
             _ctx.BTDatos.Add(entity);
-            _ctx.SaveChanges();
+            await _ctx.SaveChangesAsync();
             return entity.BTDatoID;
         }
 
-        public bool Delete(int id)
+        public async Task<int> CreateBin(BTDatoBin entity)
         {
-            throw new NotImplementedException();
+            _ctx.BTDatoBins.Add(entity);
+            await _ctx.SaveChangesAsync();
+            return entity.BTDatoID;
         }
 
-        public IEnumerable<BTDato> GetAll(int ide)
+        public async Task<bool> Delete(int id)
         {
-            List<BTDato> ls = _ctx.BTDatos.ToList();
+            await Task.Delay(TimeSpan.FromMinutes(6));
+            return true;
+        }
+
+        public async Task<IEnumerable<BTDato>> GetAll(int ide)
+        {
+            List<BTDato> ls = await _ctx.BTDatos.ToListAsync();
             return ls;
         }
 
-        public BTDato GetId(int id)
+        public async Task<BTDato> GetId(int id)
         {
-            BTDato d = _ctx.BTDatos.Find(id);
+            BTDato d = await _ctx.BTDatos.FindAsync(id);
             return d;
         }
 
-        public int Update(BTDato entity)
+        public async Task<int> Update(BTDato entity)
         {
-            throw new NotImplementedException();
+            _ctx.BTDatos.Update(entity);
+            await _ctx.SaveChangesAsync();
+            return entity.BTDatoID;
         }
     }
 }

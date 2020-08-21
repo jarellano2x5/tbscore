@@ -1,6 +1,8 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using tbscore.Models;
 using tbscore.Interfaces;
 using tbscore.Data;
@@ -15,47 +17,47 @@ namespace tbscore.Repositories
             _ctx = context;
         }
 
-        public int Create(TGUsuario entity)
+        public async Task<int> Create(TGUsuario entity)
         {
             _ctx.TGUsuarios.Add(entity);
-            _ctx.SaveChanges();
+            await _ctx.SaveChangesAsync();
             return entity.TGUsuarioID;
         }
 
-        public bool Delete(int id)
+        public async Task<bool> Delete(int id)
         {
-            TGUsuario u = _ctx.TGUsuarios.Find(id);
+            TGUsuario u = await _ctx.TGUsuarios.FindAsync(id);
             if (u == null)
             {
                 return false;
             }
             _ctx.TGUsuarios.Remove(u);
-            _ctx.SaveChanges();
+            await _ctx.SaveChangesAsync();
             return true;
         }
 
-        public IEnumerable<TGUsuario> GetAll(int ide)
+        public async Task<IEnumerable<TGUsuario>> GetAll(int ide)
         {
-            List<TGUsuario> ls = _ctx.TGUsuarios.ToList();
+            List<TGUsuario> ls = await _ctx.TGUsuarios.ToListAsync();
             return ls;
         }
 
-        public TGUsuario GetId(int id)
+        public async Task<TGUsuario> GetId(int id)
         {
-            TGUsuario u = _ctx.TGUsuarios.Find(id);
+            TGUsuario u = await _ctx.TGUsuarios.FindAsync(id);
             return u;
         }
 
-        public int Update(TGUsuario entity)
+        public async Task<int> Update(TGUsuario entity)
         {
             _ctx.TGUsuarios.Update(entity);
-            _ctx.SaveChanges();
+            await _ctx.SaveChangesAsync();
             return entity.TGUsuarioID;
         }
 
-        public TGUsuario Login(string usu, string pwd)
+        public async Task<TGUsuario> Login(string usu, string pwd)
         {
-            TGUsuario u = _ctx.TGUsuarios.FirstOrDefault(ui => ui.Usuario == usu && ui.Contrasena == pwd);
+            TGUsuario u = await _ctx.TGUsuarios.FirstOrDefaultAsync(ui => ui.Usuario == usu && ui.Contrasena == pwd);
             if (u != null)
             {
                 u.Contrasena = "";

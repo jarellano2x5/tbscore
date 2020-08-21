@@ -11,6 +11,7 @@ namespace tbscore.Data
         }
 
         public DbSet<BTDato> BTDatos { get; set; }
+        public DbSet<BTDatoBin> BTDatoBins { get; set; }
         public DbSet<TGUsuario> TGUsuarios { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -19,6 +20,11 @@ namespace tbscore.Data
             {
                 entity.HasKey(e => e.BTDatoID);
                 entity.Property(e => e.Contenido).HasMaxLength(3000).IsUnicode(false);
+                entity.Property(e => e.Origen).HasMaxLength(20).IsUnicode(false);
+            });
+            modelBuilder.Entity<BTDatoBin>(entity =>
+            {
+                entity.HasKey(e => e.BTDatoID);
                 entity.Property(e => e.Origen).HasMaxLength(20).IsUnicode(false);
             });
             modelBuilder.Entity<TGUsuario>(entity =>

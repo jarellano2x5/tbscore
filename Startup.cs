@@ -29,6 +29,10 @@ namespace tbscore
             services.AddDbContext<BatiaCtx>(options => {
                 options.UseSqlServer(Configuration.GetConnectionString("dbbatia"));
             });
+            services.AddCors(config =>
+            {
+                config.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
+            });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             // In production, the React files will be served from this directory
@@ -55,6 +59,7 @@ namespace tbscore
                 app.UseHsts();
             }
 
+            app.UseCors(options => options.AllowAnyOrigin());
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();

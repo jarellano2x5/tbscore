@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using tbscore.Interfaces;
 using tbscore.Dtos;
 using tbscore.Models;
@@ -13,10 +14,10 @@ namespace tbscore.Services
             _iusu = usuSer;
         }
 
-        public LoginDto Login(string usu, string pwd)
+        public async Task<LoginDto> Login(string usu, string pwd)
         {
             LoginDto u = new LoginDto();
-            TGUsuario ui = _iusu.Login(usu, pwd);
+            TGUsuario ui = await _iusu.Login(usu, pwd);
             if (ui != null)
             {
                 u.TGUsuarioID = ui.TGUsuarioID;
@@ -28,7 +29,7 @@ namespace tbscore.Services
             return u;
         }
 
-        public LoginDto Create(TGUsuarioDto usu)
+        public async Task<LoginDto> Create(TGUsuarioDto usu)
         {
             LoginDto u = new LoginDto();
             if (usu.Id != 0)
@@ -48,7 +49,7 @@ namespace tbscore.Services
                     EstatusID = 1,
                     FecAlta = DateTime.Now
                 };
-                int vl = _iusu.Create(nu);
+                int vl = await _iusu.Create(nu);
                 u.TGUsuarioID = vl;
                 u.Nombre = nu.Nombre;
                 u.Correo = nu.Correo;

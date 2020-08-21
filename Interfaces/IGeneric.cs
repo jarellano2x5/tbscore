@@ -1,14 +1,15 @@
 using System;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 
 namespace tbscore.Interfaces
 {
     public interface IGeneric<T> where T : class
     {
-        T GetId(int id);
-        IEnumerable<T> GetAll(int ide);
-        int Create(T entity);
-        int Update(T entity);
-        bool Delete(int id);
+        Task<T> GetId(int id);
+        Task<IEnumerable<T>> GetAll(int ide);
+        Task<int> Create(T entity);
+        Task<int> Update(T entity);
+        Task<bool> Delete(int id);
     }
 }
