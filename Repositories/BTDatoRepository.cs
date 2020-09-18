@@ -49,6 +49,12 @@ namespace tbscore.Repositories
             return d;
         }
 
+        public async Task<BTDatoBin> GetBinId(int id)
+        {
+            BTDatoBin d = await _ctx.BTDatoBins.FindAsync(id);
+            return d;
+        }
+
         public async Task<int> Update(BTDato entity)
         {
             _ctx.BTDatos.Update(entity);

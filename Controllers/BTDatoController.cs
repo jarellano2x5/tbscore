@@ -35,6 +35,14 @@ namespace wcore3.Controllers
             return await _ser.Get(id);
         }
 
+        [HttpGet("[action]/{id}")]
+        public async Task<ActionResult<string>> GetBinario(int id)
+        {
+            BTDatoBin dato = await _ser.GetBin(id);
+            string valor = System.Text.Encoding.UTF8.GetString(dato.Contenido);
+            return valor;
+        }
+
         // POST api/values
         [HttpPost("xform")]
         [Authorize]

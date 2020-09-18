@@ -34,6 +34,11 @@ namespace tbscore.Services
             return await _bat.GetId(id);
         }
 
+        public async Task<BTDatoBin> GetBin(int id)
+        {
+            return await _bat.GetBinId(id);
+        }
+
         public async Task<bool> Delete(int id)
         {
             return await _bat.Delete(id);
